@@ -1,5 +1,11 @@
 const socket = io('http://localhost:9000'); // the / namespace/endpoint
 
+
+
+socket.on('listValues',(socket) => {
+    console.log('I have recieved he values with propmt')
+})
+
 console.log(socket.io)
 socket.on('connect',()=>{
     console.log(socket.id)

@@ -13,8 +13,15 @@ const Namespace = require('./data/namespaces')
 
 
 io.on('connection',(socket)=>{
+ 
+   let nsdata = Namespace.map(ns => {
+     return{
+        img:ns.img,
+        endpoint:ns.endpoint
+     }
+   })
 
-  
+   socket.emit('listValues',nsdata)
 
 })
 
