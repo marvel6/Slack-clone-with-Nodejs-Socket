@@ -21,45 +21,11 @@ socket.on('listValues', (socket) => {
         })
     })
 
-     const edSocket = io('http://localhost:9000/wiki')
-
-     edSocket.on('nsRooms',(nssocket) => {
-        
-        let rooms = document.querySelector('.room-list')
-        rooms.innerHTML = "";
-
-        nssocket.forEach(el => {
-            let glyph ;
-
-            if(el.privateRoom){
-               glyph = 'lock'
-            }else{
-                glyph = 'globe'
-            }
-            
-            rooms.innerHTML += `<li><span class="glyphicon glyphicon-${glyph}"></span>${el.roomTitle}</li>`
-        })
-    
-     })
-
-
+    joinNs('wiki')
 })
 
 
 
 
-socket.on('messageFromServer', (dataFromServer) => {
-    console.log(dataFromServer);
-    socket.emit('dataToServer', { data: "Data from the Client!" })
-})
 
-document.querySelector('#message-form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const newMessage = document.querySelector('#user-message').value;
-    socket.emit('newMessageToServer', { text: newMessage })
-})
 
-socket.on('messageToClients', (msg) => {
-    console.log(msg)
-    document.querySelector('#messages').innerHTML += `<li>${msg.text}</li>`
-})
