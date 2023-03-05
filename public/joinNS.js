@@ -1,6 +1,6 @@
 const joinNs = (endPoint) => {
 
-    const edSocket = io(`http://localhost:9000/${endPoint}`)
+    edSocket = io(`http://localhost:9000/${endPoint}`)
 
     edSocket.on('nsRooms', (nssocket) => {
 
@@ -25,17 +25,32 @@ const joinNs = (endPoint) => {
             })
         })
 
+        const topRoom = document.querySelector('.roomy')
+        const newRoomName = topRoom.innerText
+
+        joinRoom(newRoomName)
+
     })
 
     edSocket.on('messageToClients', (msg) => {
-        console.log(msg)
-        document.querySelector('#messages').innerHTML += `<li>${msg.text}</li>`
+
+        document.querySelector('#messages').innerHTML += `<li>
+        <div class="user-image">
+            <img src="https://via.placeholder.com/30" />
+        </div>
+        <div class="user-message">
+            <div class="user-name-time">rbunch <span>1:25 pm</span></div>
+            <div class="message-text">${msg.text}</div>
+        </div>
+    </li>`
     })
+
+
 
     document.querySelector('.message-form').addEventListener('submit', (event) => {
         event.preventDefault();
         const newMessage = document.querySelector('#user-message').value;
-        socket.emit('newMessageToServer', { text: newMessage })
+        edSocket.emit('newMessageToServer', { text: newMessage })
     })
 
 
