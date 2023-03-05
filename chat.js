@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const socketio = require('socket.io')
+const df = require('silly-datetime')
 
 app.use(express.static(__dirname + '/public'));
 
@@ -45,12 +46,20 @@ Namespace.forEach(name => {
         })
 
         socket.on('newMessageToServer',(data) =>{
+
+            const msg = {
+                text:data.text,
+                time:df.format(Date.now,'HH:mm a '),
+                avatar:'https://via.placeholder.com/30',
+                username:'Marvellous Solomon'
+                
+            }
            
             let joinRoom = (Object.keys(socket.rooms))[1]
 
             //console.log(joinRoom)
 
-           io.of('/wiki').to(joinRoom).emit('messageToClients',data)
+           io.of('/wiki').to(joinRoom).emit('messageToClients',msg)
 
         })
     })

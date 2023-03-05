@@ -32,20 +32,12 @@ const joinNs = (endPoint) => {
 
     })
 
+
     edSocket.on('messageToClients', (msg) => {
+        let newMessage = textMessages(msg)
 
-        document.querySelector('#messages').innerHTML += `<li>
-        <div class="user-image">
-            <img src="https://via.placeholder.com/30" />
-        </div>
-        <div class="user-message">
-            <div class="user-name-time">rbunch <span>1:25 pm</span></div>
-            <div class="message-text">${msg.text}</div>
-        </div>
-    </li>`
+        document.querySelector('#messages').innerHTML += newMessage
     })
-
-
 
     document.querySelector('.message-form').addEventListener('submit', (event) => {
         event.preventDefault();
@@ -55,5 +47,19 @@ const joinNs = (endPoint) => {
 
 
 
+}
+
+const textMessages = (msges) => {
+    const msgs =  `<li>
+    <div class="user-image">
+        <img src="${msges.avatar}" />
+    </div>
+    <div class="user-message">
+        <div class="user-name-time">${msges.username}<span> ${msges.time} </span></div>
+        <div class="message-text">${msges.text}.</div>
+    </div>
+</li>`
+
+return msgs
 }
 

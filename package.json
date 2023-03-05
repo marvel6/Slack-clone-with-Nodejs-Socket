@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "silly-datetime": "^0.1.2",
     "socket.io": "^2.1.1"
   }
 }
