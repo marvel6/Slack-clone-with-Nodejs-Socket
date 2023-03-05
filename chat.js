@@ -29,5 +29,8 @@ io.on('connection',(socket)=>{
 Namespace.forEach(name => {
     io.of(name.endpoint).on('connection',(socket) => {
         console.log(`${socket.id} just joined this endpoint ${name.endpoint}`)
+        // get all possible rooms  to join
+
+        socket.emit('nsRooms',Namespace[0].rooms)
     })
 })
