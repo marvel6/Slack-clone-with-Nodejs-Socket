@@ -19,7 +19,10 @@ const joinRoom = (roomName) => {
     })
 
     edSocket.on('NumberOfUser',(users) => {
+
+        console.log(users)
         
         document.querySelector(".curr-room-num-users").innerHTML = `${users} <span class="glyphicon glyphicon-user"></span>`
+        document.querySelector(".curr-room-text").innerText = `${roomName}`
     })
 };
