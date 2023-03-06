@@ -41,25 +41,32 @@ Namespace.forEach(name => {
 
             socket.join(rooms)
 
-            io.of('/wiki').in(rooms).clients((error,clients)=>{
-                numberOfUsers(clients.length)
-            })
-
-
             const newRoom = Namespace[0].rooms.find(elem =>{
                 return elem.roomTitle === rooms
             })
+            
+             
 
             socket.emit('historyToclient',newRoom.history)
 
+           
+
+            io.of('/wiki').in(rooms).clients((error,client) => {
+
+                io.of('/wiki').to(rooms).emit('NumberOfUser',client.length)
+                
+            })
+
             
         })
+
+
 
         socket.on('newMessageToServer',(data) =>{
 
             const msg = {
                 text:data.text,
-                time:df.format(Date.now,'HH:mm a '),
+                time:df.format(Date.now,'HH:mm A '),
                 avatar:'https://via.placeholder.com/30',
                 username:'Marvellous Solomon'
                 
@@ -74,7 +81,7 @@ Namespace.forEach(name => {
 
             newRoom.addMessage(msg)
 
-            console.log(newRoom)
+           
 
 
            io.of('/wiki').to(joinRoom).emit('messageToClients',msg)

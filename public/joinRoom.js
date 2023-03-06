@@ -17,4 +17,9 @@ const joinRoom = (roomName) => {
 
         msgUl.scrollTo(0,msgUl.scrollHeight)
     })
+
+    edSocket.on('NumberOfUser',(users) => {
+        
+        document.querySelector(".curr-room-num-users").innerHTML = `${users} <span class="glyphicon glyphicon-user"></span>`
+    })
 };
