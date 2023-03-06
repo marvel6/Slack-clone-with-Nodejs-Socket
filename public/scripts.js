@@ -16,7 +16,8 @@ socket.on('listValues', (socket) => {
     Array.from(document.getElementsByClassName('namespace')).forEach(el => {
         el.addEventListener('click', (e) => {
             const endpoint = el.getAttribute('ens')
-            console.log(`${endpoint} is what am on now`)
+            
+            joinNs(endpoint)
 
         })
     })

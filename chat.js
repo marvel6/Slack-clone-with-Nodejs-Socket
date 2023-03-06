@@ -28,12 +28,13 @@ io.on('connection', (socket) => {
 
 
 Namespace.forEach(name => {
+    
     io.of(name.endpoint).on('connection', (socket) => {
 
         //console.log(`${socket.id} just joined this endpoint ${name.endpoint}`)
         // get all possible rooms  to join
 
-        socket.emit('nsRooms', Namespace[0].rooms)
+        socket.emit('nsRooms', name.rooms)
 
        // console.log(Namespace[0].rooms)
 
@@ -41,7 +42,7 @@ Namespace.forEach(name => {
 
             socket.join(rooms)
 
-            const newRoom = Namespace[0].rooms.find(elem =>{
+            const newRoom = name.rooms.find(elem =>{
                 return elem.roomTitle === rooms
             })
             
@@ -51,9 +52,9 @@ Namespace.forEach(name => {
 
            
 
-            io.of('/wiki').in(rooms).clients((error,client) => {
+            io.of(name.endpoint).in(rooms).clients((error,client) => {
 
-                io.of('/wiki').to(rooms).emit('NumberOfUser',client.length)
+                io.of(name.endpoint).to(rooms).emit('NumberOfUser',client.length)
                 
             })
 
@@ -74,7 +75,7 @@ Namespace.forEach(name => {
            
             let joinRoom = (Object.keys(socket.rooms))[1]
 
-            const newRoom = Namespace[0].rooms.find(item => {
+            const newRoom = name.rooms.find(item => {
                 return item.roomTitle === joinRoom
             })
 
@@ -84,7 +85,7 @@ Namespace.forEach(name => {
            
 
 
-           io.of('/wiki').to(joinRoom).emit('messageToClients',msg)
+           io.of(name.endpoint).to(joinRoom).emit('messageToClients',msg)
 
         })
     })
