@@ -1,5 +1,6 @@
 const socket = io('http://localhost:9000'); // the / namespace/endpoint
 
+let edSocket = "";
 
 
 socket.on('listValues', (socket) => {
@@ -18,6 +19,8 @@ socket.on('listValues', (socket) => {
             const endpoint = el.getAttribute('ens')
             
             joinNs(endpoint)
+
+            console.log(`${endpoint} is what am on now`)
 
         })
     })

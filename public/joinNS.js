@@ -1,6 +1,13 @@
 const joinNs = (endPoint) => {
 
-    edSocket = io(`http://localhost:9000/${endPoint}`)
+    if(edSocket){
+
+        edSocket.close()
+
+        document.querySelector('#user-input').removeEventListener('submit',submitValue)
+    }
+
+    edSocket = io(`http://localhost:9000${endPoint}`)
 
     edSocket.on('nsRooms', (nssocket) => {
 
@@ -21,7 +28,10 @@ const joinNs = (endPoint) => {
 
         Array.from(document.getElementsByClassName('roomy')).forEach(el => {
             el.addEventListener('click', (val) => {
-                console.log("someone clicked", val.target.innerHTML)
+                
+                joinRoom(val.target.innerText)
+
+               
             })
         })
 
@@ -40,14 +50,16 @@ const joinNs = (endPoint) => {
         document.querySelector('#messages').innerHTML += newMessage
     })
 
-    document.querySelector('.message-form').addEventListener('submit', (event) => {
-        event.preventDefault();
-        const newMessage = document.querySelector('#user-message').value;
-        edSocket.emit('newMessageToServer', { text: newMessage })
-    })
+    document.querySelector('.message-form').addEventListener('submit',submitValue)
 
 
 
+}
+
+const submitValue =  (event) => {
+    event.preventDefault();
+    const newMessage = document.querySelector('#user-message').value;
+    edSocket.emit('newMessageToServer', { text: newMessage })
 }
 
 const textMessages = (msges) => {
