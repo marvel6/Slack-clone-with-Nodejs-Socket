@@ -35,6 +35,8 @@ Namespace.forEach(name => {
 
         socket.emit('nsRooms', Namespace[0].rooms)
 
+       // console.log(Namespace[0].rooms)
+
         socket.on('joinRoom',async(rooms,numberOfUsers) =>{
 
             socket.join(rooms)
@@ -42,6 +44,14 @@ Namespace.forEach(name => {
             io.of('/wiki').in(rooms).clients((error,clients)=>{
                 numberOfUsers(clients.length)
             })
+
+
+            const newRoom = Namespace[0].rooms.find(elem =>{
+                return elem.roomTitle === rooms
+            })
+
+            socket.emit('historyToclient',newRoom.history)
+
             
         })
 
@@ -57,7 +67,15 @@ Namespace.forEach(name => {
            
             let joinRoom = (Object.keys(socket.rooms))[1]
 
-            //console.log(joinRoom)
+            const newRoom = Namespace[0].rooms.find(item => {
+                return item.roomTitle === joinRoom
+            })
+
+
+            newRoom.addMessage(msg)
+
+            console.log(newRoom)
+
 
            io.of('/wiki').to(joinRoom).emit('messageToClients',msg)
 

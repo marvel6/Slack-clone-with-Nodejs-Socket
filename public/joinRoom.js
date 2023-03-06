@@ -5,4 +5,16 @@ const joinRoom = (roomName) => {
 
 
     })
+
+    edSocket.on('historyToclient', (newMessages) => {
+        const msgUl = document.querySelector('#messages')
+        msgUl.innerHTML = ""
+
+        newMessages.forEach(el => {
+            const newMsg = textMessages(el)
+            msgUl.innerHTML += newMsg
+        })
+
+        msgUl.scrollTo(0,msgUl.scrollHeight)
+    })
 };

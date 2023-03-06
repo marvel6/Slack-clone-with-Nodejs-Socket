@@ -34,6 +34,7 @@ const joinNs = (endPoint) => {
 
 
     edSocket.on('messageToClients', (msg) => {
+        
         let newMessage = textMessages(msg)
 
         document.querySelector('#messages').innerHTML += newMessage
