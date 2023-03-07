@@ -40,6 +40,12 @@ Namespace.forEach(name => {
 
         socket.on('joinRoom',async(rooms,numberOfUsers) =>{
 
+            let leaveRoom = (Object.keys(socket.rooms))[1]
+
+            socket.leave(leaveRoom)
+
+            updateNumberOfUser(name,leaveRoom)
+
             socket.join(rooms)
 
             const newRoom = name.rooms.find(elem =>{
@@ -49,14 +55,8 @@ Namespace.forEach(name => {
              
 
             socket.emit('historyToclient',newRoom.history)
-
            
-
-            io.of(name.endpoint).in(rooms).clients((error,client) => {
-
-                io.of(name.endpoint).to(rooms).emit('NumberOfUser',client.length)
-                
-            })
+            updateNumberOfUser(name,rooms)
 
             
         })
@@ -90,3 +90,13 @@ Namespace.forEach(name => {
         })
     })
 })
+
+
+
+const updateNumberOfUser = (name,rooms) =>{
+    io.of(name.endpoint).in(rooms).clients((error,client) => {
+
+        io.of(name.endpoint).to(rooms).emit('NumberOfUser',client.length)
+        
+    })
+}
