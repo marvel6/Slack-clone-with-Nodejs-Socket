@@ -1,11 +1,6 @@
 const joinRoom = (roomName) => {
 
-    edSocket.emit('joinRoom', roomName, (numberOfUsers) => {
-
-
-
-
-    })
+    edSocket.emit('joinRoom', roomName, (numberOfUsers))
 
     edSocket.on('historyToclient', (newMessages) => {
         const msgUl = document.querySelector('#messages')
