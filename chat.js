@@ -34,6 +34,8 @@ Namespace.forEach(name => {
         //console.log(`${socket.id} just joined this endpoint ${name.endpoint}`)
         // get all possible rooms  to join
 
+        const username = socket.handshake.query.username
+
         socket.emit('nsRooms', name.rooms)
 
        // console.log(Namespace[0].rooms)
@@ -69,7 +71,7 @@ Namespace.forEach(name => {
                 text:data.text,
                 time:df.format(Date.now,'HH:mm A '),
                 avatar:'https://via.placeholder.com/30',
-                username:'Marvellous Solomon'
+                username
                 
             }
            
