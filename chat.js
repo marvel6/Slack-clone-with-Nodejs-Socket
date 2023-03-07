@@ -82,9 +82,7 @@ Namespace.forEach(name => {
 
             newRoom.addMessage(msg)
 
-           
-
-
+        
            io.of(name.endpoint).to(joinRoom).emit('messageToClients',msg)
 
         })
